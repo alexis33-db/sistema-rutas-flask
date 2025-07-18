@@ -1,0 +1,39 @@
+{% extends 'base_auth.html' %}
+{% block title %}Iniciar Sesión{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
+  <div class="card shadow-lg" style="width: 380px; border-radius: 1rem; overflow: hidden;">
+    <div class="card-header text-center" style="background: linear-gradient(135deg, #1e88e5, #42a5f5);">
+      <h3 class="card-title text-white mb-0">GeoRouteEC</h3>
+      <p class="text-white-50 small">Bienvenido de vuelta</p>
+    </div>
+    <div class="card-body p-4">
+      <form action="{{ url_for('login') }}" method="post">
+        <div class="input-group mb-3">
+          <input name="username" type="text" class="form-control form-control-lg" placeholder="Usuario" required pattern="[\w\d]{4,20}">
+          <div class="input-group-append">
+            <div class="input-group-text bg-white">
+              <i class="fas fa-user text-primary"></i>
+            </div>
+          </div>
+        </div>
+        <div class="input-group mb-4">
+          <input name="password" type="password" class="form-control form-control-lg" placeholder="Contraseña" required minlength="6">
+          <div class="input-group-append">
+            <div class="input-group-text bg-white">
+              <i class="fas fa-lock text-primary"></i>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg btn-block" style="border-radius: 50px;">
+          <i class="fas fa-sign-in-alt mr-2"></i> Entrar
+        </button>
+      </form>
+      <p class="mt-3 text-center">
+        <a href="{{ url_for('register') }}" class="text-primary">Crear una cuenta nueva</a>
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

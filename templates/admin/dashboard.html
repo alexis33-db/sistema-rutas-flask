@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard Admin{% endblock %}
+{% block content %}
+<div class="container">
+  <h1 class="mb-4">Panel de Administración</h1>
+
+  <div class="row">
+    <!-- Card Ciudades -->
+    <div class="col-md-3">
+      <div class="card border-primary mb-4 shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <i class="fas fa-city"></i> Ciudades ({{ ciudades_count }})
+        </div>
+        <div class="card-body">
+          <a href="{{ url_for('admin.list_ciudades') }}" class="btn btn-light btn-block mb-2">
+            <i class="fas fa-list"></i> Ver todas
+          </a>
+          <a href="{{ url_for('admin.nueva_ciudad') }}" class="btn btn-success btn-block">
+            <i class="fas fa-plus"></i> Nueva Ciudad
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card Conexiones -->
+    <div class="col-md-3">
+      <div class="card border-success mb-4 shadow-sm">
+        <div class="card-header bg-success text-white">
+          <i class="fas fa-road"></i> Conexiones ({{ conexiones_count }})
+        </div>
+        <div class="card-body">
+          <a href="{{ url_for('admin.list_conexiones') }}" class="btn btn-light btn-block mb-2">
+            <i class="fas fa-list"></i> Ver todas
+          </a>
+          <a href="{{ url_for('admin.nueva_conexion') }}" class="btn btn-primary btn-block">
+            <i class="fas fa-plus"></i> Nueva Conexión
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card Grafo -->
+    <div class="col-md-3">
+      <div class="card border-info mb-4 shadow-sm">
+        <div class="card-header bg-info text-white">
+          <i class="fas fa-project-diagram"></i> Grafo
+        </div>
+        <div class="card-body">
+          <a href="{{ url_for('ver_grafo') }}" target="_blank" class="btn btn-light btn-block mb-2">
+            <i class="fas fa-eye"></i> Ver Grafo
+          </a>
+          <a href="{{ url_for('ver_grafo') }}?t={{ now().timestamp() }}" target="_blank"
+             class="btn btn-outline-info btn-block">
+            <i class="fas fa-sync-alt"></i> Refrescar
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card Estadísticas de Rutas -->
+    <div class="col-md-3">
+      <div class="card border-warning mb-4 shadow-sm">
+        <div class="card-header bg-warning text-white">
+          <i class="fas fa-chart-bar"></i> Visitas en Rutas
+        </div>
+        <div class="card-body">
+          <h6 class="font-weight-bold">Top 5 más visitadas</h6>
+          <ul class="list-group list-group-flush mb-3">
+            {% for nombre, count in top_visitadas %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              {{ nombre }}
+              <span class="badge badge-primary badge-pill">{{ count }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+          <h6 class="font-weight-bold">5 menos visitadas</h6>
+          <ul class="list-group list-group-flush">
+            {% for nombre, count in menos_visitadas %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              {{ nombre }}
+              <span class="badge badge-secondary badge-pill">{{ count }}</span>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}Ruta Ibarra → Loja{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Resultado: Ibarra → Loja</h2>
+    {% if resultado.camino %}
+        <div class="alert alert-success">
+            <strong>Ruta:</strong> {{ resultado.camino | join(" → ") }}<br>
+            <strong>Costo total:</strong> ${{ resultado.costo }}
+        </div>
+        {% if resultado.valido %}
+            <div class="alert alert-success">✅ Incluye ciudad costera</div>
+        {% else %}
+            <div class="alert alert-danger">❌ No incluye ciudad costera</div>
+        {% endif %}
+    {% else %}
+        <div class="alert alert-warning">
+            ⚠️ No se encontró camino entre Ibarra y Loja.
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

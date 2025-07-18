@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}{{ accion }} Ciudad{% endblock %}
+{% block content %}
+<div class="container">
+  <h1 class="mb-4">{{ accion }} Ciudad</h1>
+  <form method="post">
+    <div class="form-group">
+      <label>Nombre</label>
+      <input type="text" name="nombre" class="form-control"
+             value="{{ ciudad.nombre if ciudad else '' }}"
+             required maxlength="100">
+    </div>
+    <div class="form-group form-check">
+      <input type="checkbox" class="form-check-input" name="is_costera" id="is_costera"
+             {% if ciudad and ciudad.is_costera %}checked{% endif %}>
+      <label class="form-check-label" for="is_costera">Ciudad costera</label>
+    </div>
+    <button class="btn btn-success mt-3">{{ accion }}</button>
+    <a href="{{ url_for('admin.list_ciudades') }}" class="btn btn-secondary mt-3">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Buscar Ruta{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2 class="mb-4">Buscar Camino Más Económico</h2>
+    <form method="POST">
+        <div class="row">
+            <div class="col-md-6">
+                <label for="origen">Ciudad/Provincia Origen</label>
+                <select class="form-control" name="origen" required>
+                    <option value="" disabled {% if not origen %}selected{% endif %}>
+                      Selecciona una ciudad
+                    </option>
+                    {% for ciudad in ciudades %}
+                        <option value="{{ ciudad }}"
+                          {% if ciudad == origen %}selected{% endif %}>
+                          {{ ciudad }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="destino">Ciudad/Provincia Destino</label>
+                <select class="form-control" name="destino" required>
+                    <option value="" disabled {% if not destino %}selected{% endif %}>
+                      Selecciona una ciudad
+                    </option>
+                    {% for ciudad in ciudades %}
+                        <option value="{{ ciudad }}"
+                          {% if ciudad == destino %}selected{% endif %}>
+                          {{ ciudad }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-4">
+            <i class="fas fa-search-location"></i> Buscar Ruta
+        </button>
+    </form>
+
+    {% if resultado %}
+        <hr>
+        <h4 class="mt-4">Resultado:</h4>
+        {% if resultado.camino %}
+            <div class="alert alert-success">
+                <strong>Ruta:</strong> {{ resultado.camino | join(" → ") }}<br>
+                <strong>Costo total:</strong> ${{ resultado.costo }}
+            </div>
+            {% if resultado.valido %}
+                <div class="alert alert-success">✅ Incluye ciudad costera</div>
+            {% else %}
+                <div class="alert alert-danger">❌ No incluye ciudad costera</div>
+            {% endif %}
+        {% else %}
+            <div class="alert alert-warning">
+                ⚠️ No se encontró camino entre las seleccionadas.
+            </div>
+        {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

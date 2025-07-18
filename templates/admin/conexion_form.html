@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}{{ accion }} Conexión{% endblock %}
+{% block content %}
+<div class="container">
+  <h1 class="mb-4">{{ accion }} Conexión</h1>
+  <form method="post">
+    <div class="form-row">
+      <div class="form-group col-md-4">
+        <label>Origen</label>
+        <select name="origen" class="form-control" required>
+          <option value="" disabled selected>Selecciona origen</option>
+          {% for ciudad in ciudades %}
+            <option value="{{ ciudad.id }}"
+              {% if conn and conn.origen_id==ciudad.id %}selected{% endif %}>
+              {{ ciudad.nombre }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label>Destino</label>
+        <select name="destino" class="form-control" required>
+          <option value="" disabled selected>Selecciona destino</option>
+          {% for ciudad in ciudades %}
+            <option value="{{ ciudad.id }}"
+              {% if conn and conn.destino_id==ciudad.id %}selected{% endif %}>
+              {{ ciudad.nombre }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group col-md-4">
+        <label>Distancia</label>
+        <input type="number" name="distancia" class="form-control" min="1" required
+               value="{{ conn.distancia if conn else '' }}">
+      </div>
+    </div>
+    <button class="btn btn-success mt-3">{{ accion }}</button>
+    <a href="{{ url_for('admin.list_conexiones') }}" class="btn btn-secondary mt-3">Cancelar</a>
+  </form>
+</div>
+{% endblock %}

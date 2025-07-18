@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}GeoRouteEC{% endblock %}</title>
+
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='plugins/fontawesome-free/css/all.min.css') }}">
+
+  <!-- AdminLTE -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='dist/css/adminlte.min.css') }}">
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <ul class="navbar-nav">
+      {% if current_user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+      </li>
+      {% endif %}
+    </ul>
+    {% if not current_user.is_authenticated %}
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a href="{{ url_for('login') }}" class="nav-link">Login</a>
+      </li>
+      <li class="nav-item">
+        <a href="{{ url_for('register') }}" class="nav-link">Register</a>
+      </li>
+    </ul>
+    {% else %}
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a href="{{ url_for('logout') }}" class="nav-link">Logout</a>
+      </li>
+    </ul>
+    {% endif %}
+  </nav>
+
+  <!-- Sidebar -->
+  {% if current_user.is_authenticated %}
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <a href="{{ url_for('index') }}" class="brand-link">
+      <img src="{{ url_for('static', filename='dist/img/AdminLTELogo.png') }}" alt="Logo"
+           class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">GeoRouteEC</span>
+    </a>
+    <div class="sidebar">
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" role="menu">
+          <!-- Buscar Ruta -->
+          <li class="nav-item">
+            <a href="{{ url_for('camino_formulario') }}" class="nav-link">
+              <i class="nav-icon fas fa-route"></i>
+              <p>Buscar Ruta</p>
+            </a>
+          </li>
+          <!-- Ver Grafo -->
+          <li class="nav-item">
+            <a href="{{ url_for('ver_grafo') }}" class="nav-link" target="_blank">
+
+              <i class="nav-icon fas fa-project-diagram"></i>
+              <p>Ver Grafo</p>
+            </a>
+          </li>
+          <!-- Dashboard Admin (solo admins) -->
+          {% if current_user.role == 'admin' %}
+          <li class="nav-item">
+            <a href="{{ url_for('admin.dashboard') }}" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>Dashboard Admin</p>
+            </a>
+          </li>
+          {% endif %}
+          <!-- Cerrar Sesión -->
+          <li class="nav-item">
+            <a href="{{ url_for('logout') }}" class="nav-link">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
+              <p>Cerrar Sesión</p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </aside>
+  {% endif %}
+
+  <!-- Contenido principal -->
+  <div class="content-wrapper p-4">
+    {% block content %}{% endblock %}
+  </div>
+
+  <!-- Footer -->
+  <footer class="main-footer text-center">
+    <strong>&copy; 2025 GeoRouteEC</strong>
+  </footer>
+</div>
+
+<!-- Scripts -->
+<script src="{{ url_for('static', filename='plugins/jquery/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='dist/js/adminlte.min.js') }}"></script>
+</body>
+</html>

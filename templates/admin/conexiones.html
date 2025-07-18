@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Conexiones{% endblock %}
+{% block content %}
+<div class="container">
+  <h1 class="mb-4">Conexiones</h1>
+  <a href="{{ url_for('admin.nueva_conexion') }}" class="btn btn-primary mb-3">
+    <i class="fas fa-plus"></i> Nueva Conexión
+  </a>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Origen</th>
+        <th>Destino</th>
+        <th>Distancia</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for conn, o, d in conexiones %}
+      <tr>
+        <td>{{ conn.id }}</td>
+        <td>{{ o.nombre }}</td>
+        <td>{{ d.nombre }}</td>
+        <td>{{ conn.distancia }}</td>
+        <td>
+          <a href="{{ url_for('admin.editar_conexion', id=conn.id) }}" class="btn btn-sm btn-warning">
+            <i class="fas fa-edit"></i> Editar
+          </a>
+          <form action="{{ url_for('admin.borrar_conexion', id=conn.id) }}" method="post"
+                style="display:inline" onsubmit="return confirm('¿Borrar conexión?');">
+            <button class="btn btn-sm btn-danger">
+              <i class="fas fa-trash"></i> Borrar
+            </button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
